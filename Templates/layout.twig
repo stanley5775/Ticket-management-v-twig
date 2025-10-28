@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+  <title>{{ title ?? 'Ticket Management App' }}</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="shadow bg-white fixed top-0 left-0 w-full z-50">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        
+        <!-- Logo -->
+        <h1 class="text-2xl font-bold text-blue-600">TicketApp</h1>
+
+        <!-- Hamburger Button (mobile only) -->
+        <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-4">
+          <a href="/" class="hover:text-blue-600">Home</a>
+          {% if session %}
+            <a href="/dashboard" class="hover:text-blue-600">Dashboard</a>
+            <a href="/logout" class="text-red-600 font-semibold hover:text-red-700">Logout</a>
+          {% else %}
+            <a href="/login" class="hover:text-blue-600">Login</a>
+            <a href="/signup" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Get Started</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+      <div class="flex flex-col space-y-2 p-4">
+        <a href="/" class="block hover:text-blue-600">Home</a>
+        {% if session %}
+          <a href="/dashboard" class="block hover:text-blue-600">Dashboard</a>
+          <a href="/logout" class="block text-red-600 font-semibold hover:text-red-700">Logout</a>
+        {% else %}
+          <a href="/login" class="block hover:text-blue-600">Login</a>
+          <a href="/signup" class="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-center">Get Started</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-[1440px] mx-auto w-full flex-grow p-6 pt-24">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-sm text-gray-600 py-4 border-t">
+    © 2025 TicketApp. All rights reserved.
+  </footer>
+
+  <!-- Mobile Toggle Script -->
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    toggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
